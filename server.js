@@ -21,6 +21,6 @@ app.get('/home', (req, res, next) => {
 
 app.use('/api/account/', accountRouter);
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log(`Server is listening at http://localhost:${PORT}`);
 })
