@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const bodyParser = require("body-parser");
-const PORT = 3000;
+require('dotenv').config();
+const PORT = process.env.PORT;
 
 const accountRouter = require("./routers/account");
 
@@ -21,6 +22,6 @@ app.get('/home', (req, res, next) => {
 
 app.use('/api/account/', accountRouter);
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server is listening at http://localhost:${PORT}`);
 })
