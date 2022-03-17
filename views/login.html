@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="../public/css/main.css">
+    </head>
+    <body>
+        Username : <input type="text" id="username"><br>
+        Password : <input type="text" id="password"><br>
+        <p id="warnLogin" style="color:red;display:none">Wrong username or password.Please try again!</p>
+        <button onclick="Login()">Login</button>
+    </body>
+    <script src="../public/js/jquery-3.6.0.min.js"></script>
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+          const d = new Date();
+          d.setTime(d.getTime() + (exdays*24*60*60*1000));
+          let expires = "expires="+ d.toUTCString();
+          document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        function Login() {
+          $.ajax({
+            url: '/login',
+            type: 'POST',
+            data: {
+              username: $('#username').val(),
+              password: $('#password').val()
+            }
+          })
+          .then(data => {
+            console.log(data);
+            if (data.message == "success") {
+              console.log("Login successfully!");
+              $('#warnLogin').show();
+              $('#warnLogin').text('Login Successfully!');
+              $('#warnLogin').css("color","green");
+              setCookie('token', data.token, 1);
+            } else {
+              $('#username').val('');
+              $('#password').val('');
+              $('#warnLogin').show();
+              console.log('Login again');
+            }
+            
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        }
+    </script>
+</html>
