@@ -5,7 +5,8 @@ mongoose.connect('mongodb://localhost/test');
 
 const account = new Schema({
     username: String,
-    password: String
+    password: String,
+    role: String
 }, {
     collection: 'account'
 })

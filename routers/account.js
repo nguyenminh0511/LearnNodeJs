@@ -51,6 +51,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
+    let role = req.body.role;
 
     accountModel.find({
         username: username
@@ -59,7 +60,8 @@ router.post('/', (req, res, next) => {
             if (data.length == 0) {
                 return accountModel.create({
                     username: username,
-                    password: password
+                    password: password,
+                    role: role
                 })
             } else {
                 res.json("This account is already exist. Please try another!");

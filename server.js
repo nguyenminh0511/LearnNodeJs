@@ -24,14 +24,35 @@ const checkLogin = (req, res, next) => {
     try {
         let check = jwt.verify(req.cookies.token, "pass");
         if (check) {
+            req.userId = check._id;
             next();
         }
     } catch(err) {
+        console.log(err);
         res.redirect('/login');
     }
 }
 
-app.get('/home', checkLogin, (req, res, next) => {
+const checkAdmin = (req, res, next) => {
+    let _id = req.userId;
+    AccountModel.find({
+        _id : _id
+    })
+    .then(data => {
+        if (data.length > 0) {
+            if (data[0].role == 'admin' || data[0].role == 'manager') {
+                next();
+            } else {
+                res.json("NOT PERMITTION");
+            }
+        } else {
+            console.log(data);
+            res.status(500).json("Error");
+        }
+    })
+}
+
+app.get('/home', checkLogin, checkAdmin, (req, res, next) => {
     res.sendFile(path.join(__dirname, './views/index.html'));
 })
 
@@ -62,7 +83,7 @@ app.post('/login', (req, res, next) => {
         
     })
     .catch(err => {
-        res.json("error");
+        res.status(500).json("error");
     })
 })
 

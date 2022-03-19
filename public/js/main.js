@@ -12,7 +12,7 @@ function LoadPage(page) {
             const element = data[i];
 
             let item = $(`
-                <h2>${element.username} : ${element.password}</h2> 
+                <h2>${element.username} : ${element.role}</h2> 
             `)
             $('#content').append(item);
         }
@@ -34,7 +34,7 @@ function prePage() {
             const element = data[i];
 
             let item = $(`
-                <h2>${element.username} : ${element.password}</h2>
+                <h2>${element.username} : ${element.role}</h2>
             `)
             $('#content').append(item);
         }
@@ -55,7 +55,7 @@ function nextPage() {
         for (let i = 0; i < data.length; ++i) {
             const element = data[i];
             let item = $(`
-                <h2>${element.username} : ${element.password}</h2>
+                <h2>${element.username} : ${element.role}</h2>
             `)
             $('#content').append(item);
         }
